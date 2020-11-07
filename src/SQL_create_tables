@@ -12,9 +12,10 @@ CREATE TABLE orders (
 	order_id int auto_increment,
 	item_code varchar(10) NOT NULL,
 	quantity int NOT NULL,
-	order_timestamp timestamp DEFAULT "today at this time",
+	order_timestamp date DEFAULT current_timestamp,
 	
-	PRIMARY KEY (order_id)
-	FOREIGN KEY (item_code) references item(item_code); 
+	PRIMARY KEY (order_id) 
 );
 
+Alter Table orders 
+Add FOREIGN KEY (item_code) references item(item_code);
