@@ -37,6 +37,7 @@ public class orders {
 		this.quantity = quantity;
 	}
 	
+	//TODO might want to make this so that it returns the current system date
 	public Date getOrder_Timestamp() {
 		return order_timestamp;
 	}
