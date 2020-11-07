@@ -17,3 +17,4 @@ CREATE TABLE orders (
 	PRIMARY KEY (order_id)
 	FOREIGN KEY (item_code) references item(item_code); 
 );
+

@@ -17,16 +17,32 @@ public class orders {
 		return order_id;
 	}
 	
+	public void setOrder_Id(int order_id) {
+		this.order_id = order_id;
+	}
+	
 	public String getItem_Code() {
 		return item_code;
+	}
+	
+	public void setItem_Code(String item_code) {
+		this.item_code = item_code;
 	}
 	
 	public int getQuantity() {
 		return quantity;
 	}
 	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
 	public Date getOrder_Timestamp() {
 		return order_timestamp;
+	}
+	
+	public void setOrder_Timestamp(Date order_timestamp) {
+		this.order_timestamp = order_timestamp;
 	}
 	
 	public String toString() {
