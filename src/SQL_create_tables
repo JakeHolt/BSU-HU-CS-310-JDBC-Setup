@@ -1,0 +1,19 @@
+CREATE TABLE item (
+	item_id int auto_increment,
+	item_code varchar(10) UNIQUE NOT NULL,
+	description varchar(50),
+	price decimal(13,2) DEFAULT 0,
+	inventory_ammount int DEFAULT 0,
+	
+	PRIMARY KEY (item_id)
+);
+
+CREATE TABLE orders (
+	order_id int auto_increment,
+	item_code varchar(10) NOT NULL,
+	quantity int NOT NULL,
+	order_timestamp timestamp DEFAULT "today at this time",
+	
+	PRIMARY KEY (order_id)
+	FOREIGN KEY (item_code) references item(item_code); 
+);
