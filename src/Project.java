@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Project {
-	//TODO add a create item method, it will be like the createCar method
+	//XXX add a create item method, it will be like the createCar method
 	//might have to take out item_id because it is autocompleted within the system
 	public static item createItem(int item_id, String item_code, String description, double price, int inventory_amount) throws SQLException{
 		Connection connection = null;
@@ -12,7 +12,7 @@ public class Project {
 		connection = MySqlDatabase.getDatabaseConnection();
 		Statement sqlStatement = connection.createStatement();
 		
-		String sql = String.format("INSERT INTO item (item, item_code, description, price, inventory_amount) VALUES ('%s', '%s', '%s', '%s')", 
+		String sql = String.format("INSERT INTO item (item, item_code, description, price, inventory_amount) VALUES ('%s', '%s', '%s', '%s');", 
 				item.getItem_ID(),
 				item.getItem_Code(),
 				item.getDescription(),
@@ -25,7 +25,7 @@ public class Project {
 		return item;
 	}
 	
-	//TODO create an order, would be like the createOwner method
+	//XXX create an order, would be like the createOwner method
 	//might need to change the order_timestamp, maybe take it out of the parameters and maybe also order ID since they are both auto completed 
 	public static orders createOrder(int order_id, String item_code, int quantity, Date order_timestamp) throws SQLException {
 		Connection connection = null;
@@ -34,7 +34,7 @@ public class Project {
 		connection = MySqlDatabase.getDatabaseConnection();
 		Statement sqlStatement = connection.createStatement();
 		
-		String sql = String.format("INSERT INTO orders (order_id, item_code, quantity, order_timestamp) VALUES ('%s, '%s', '%s', '%s')", 
+		String sql = String.format("INSERT INTO orders (order_id, item_code, quantity, order_timestamp) VALUES ('%s, '%s', '%s', '%s');", 
 				order.getOrder_Id(),
 				order.getItem_Code(),
 				order.getQuantity(),
@@ -55,14 +55,87 @@ public class Project {
 	}
 
 	
-	//TODO update the order 
-	
-	//TODO delete an order 
+	//XXX update the order 
+	public static void updateOrder(String item_code, int quantity, int order_id) throws SQLException {
+		Connection connection = null;
+		
+		connection = MySqlDatabase.getDatabaseConnection();
+		Statement sqlStatement = connection.createStatement();
+		
+		String sql = String.format("UPDATE orders SET item_code, quantity WHERE order_id = '%s';", item_code, quantity, order_id);
+		
+		sqlStatement.executeUpdate(sql);
+		
+		connection.close();
+		
+	}
+	//XXX delete an order
+	public static void deleteOrder(int order_id) throws SQLException { 
+		Connection connection = null;
+		
+		connection = MySqlDatabase.getDatabaseConnection();
+		Statement sqlStatement = connection.createStatement();
+		
+		String sql = String.format("DELETE FROM orders WHERE order_id = '%s';", order_id);
+		sqlStatement.executeUpdate(sql);
+		
+		connection.close();
+	}
 	
 	//TODO get a list of all the items
+	public static List<item> getAllItems() throws SQLException {
+		Connection connection = null;
+		
+		connection = MySqlDatabase.getDatabaseConnection();
+		Statement sqlStatement = connection.createStatement();
+		
+		String sql = "SELECT * FROM Items;";
+		ResultSet resultSet = sqlStatement.executeQuery(sql);
+		
+		List<item> ItemsArray = new ArrayList<item>();
+		
+		while(resultSet.next()) {
+			int item_id = resultSet.getInt(1);
+			String item_code = resultSet.getString(2);
+			String description = resultSet.getString(3);
+			double price = resultSet.getDouble(4);
+			int inventory_amount = resultSet.getInt(5);
+			
+			item item = new item(item_id, item_code, description, price, inventory_amount);
+			ItemsArray.add(item);
+		}
+		resultSet.close();
+		connection.close();
+		
+		return ItemsArray;
+	}
 	
 	//TODO get a list of all orders
-	 
+	public static List<orders> getAllOrders() throws SQLException {
+		Connection connection = null;
+		
+		connection = MySqlDatabase.getDatabaseConnection();
+		Statement sqlStatement = connection.createStatement();
+		
+		String sql = "SELECT * FROM orders;";
+		ResultSet resultSet = sqlStatement.executeQuery(sql);
+		
+		List<orders> OrderArray = new ArrayList<orders>();
+		
+		while(resultSet.next()) {
+			int order_id = resultSet.getInt(1);
+			String item_code = resultSet.getString(2);
+			int quantity = resultSet.getInt(3);
+			Date order_timestamp = resultSet.getDate(4);
+			
+			orders order = new orders(order_id, item_code, quantity, order_timestamp);
+			OrderArray.add(order);
+		}
+		resultSet.close();
+		connection.close();
+		
+		return OrderArray;
+	}
 	//TODO main method, this will be the interface 
 	public static void main(String[] agrs) {
 		
