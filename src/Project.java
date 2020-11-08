@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Date; 
 
 public class Project {
 	//XXX add a create item method, it will be like the createCar method
@@ -27,9 +28,9 @@ public class Project {
 	
 	//XXX create an order, would be like the createOwner method
 	//might need to change the order_timestamp, maybe take it out of the parameters and maybe also order ID since they are both auto completed 
-	public static orders createOrder(int order_id, String item_code, int quantity, Date order_timestamp) throws SQLException {
+	public static orders createOrder(int order_id, String item_code, int quantity) throws SQLException {
 		Connection connection = null;
-		orders order = new orders(order_id, item_code, quantity, order_timestamp);
+		orders order = new orders(order_id, item_code, quantity);
 		
 		connection = MySqlDatabase.getDatabaseConnection();
 		Statement sqlStatement = connection.createStatement();
@@ -47,8 +48,8 @@ public class Project {
 		ResultSet resultSet = sqlStatement.getGeneratedKeys();
 		resultSet.next();
 		
-		//this could take care of the order ID so I dont have to put it up above in sql var
-		int order_resultSet = resultSet.getInt(1);
+		//XXX this could take care of the order ID so I dont have to put it up above in sql var
+		//int order_resultSet = resultSet.getInt(1);
 		connection.close();
 		
 		return order;
@@ -82,7 +83,7 @@ public class Project {
 		connection.close();
 	}
 	
-	//TODO get a list of all the items
+	//XXX get a list of all the items
 	public static List<item> getAllItems() throws SQLException {
 		Connection connection = null;
 		
@@ -110,7 +111,7 @@ public class Project {
 		return ItemsArray;
 	}
 	
-	//TODO get a list of all orders
+	//XXX get a list of all orders
 	public static List<orders> getAllOrders() throws SQLException {
 		Connection connection = null;
 		
@@ -126,9 +127,10 @@ public class Project {
 			int order_id = resultSet.getInt(1);
 			String item_code = resultSet.getString(2);
 			int quantity = resultSet.getInt(3);
-			Date order_timestamp = resultSet.getDate(4);
+			//XXX might not need this because timestamp parameter was changed 
+			//Date order_timestamp = resultSet.getDate(4);
 			
-			orders order = new orders(order_id, item_code, quantity, order_timestamp);
+			orders order = new orders(order_id, item_code, quantity);
 			OrderArray.add(order);
 		}
 		resultSet.close();
@@ -136,15 +138,33 @@ public class Project {
 		
 		return OrderArray;
 	}
+	
+	
 	//TODO main method, this will be the interface 
-	public static void main(String[] agrs) {
+	public static void main(String[] args) {
 		
 		
-//		if (args[0].equals("ListItems")) {
-//			
-//		} else if(arge[0].equals("CreateItem")) {
-//			String item_code = args[1]; 
-//		}
+		if (args[0].equals("ListItems")) {
+
+			getAllItems();
+			
+		} else if(args[0].equals("CreateItem")) {
+			
+			int item_id = Integer.parseInt(args[1]);
+			String item_code = args[2]; 
+			String description = args[3];
+			double price = Double.parseDouble(args[4]); 
+			int inventory_amount = Integer.parseInt(args[5]);
+			createItem(item_id, item_code, description, price, inventory_amount);
+			
+		} else if (args[0].equals("CreateOrder")) {
+			
+			int order_id = Integer.parseInt(args[1]);
+			String item_code = args[2];
+			int quantity = Integer.parseInt(args[3]);
+			createOrder(order_id, item_code, quantity);
+			
+		}
 	}
 }
 

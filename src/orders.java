@@ -6,11 +6,12 @@ public class orders {
 	private int quantity;
 	private Date order_timestamp;
 	
-	public orders(int order_id, String item_code, int quantity, Date order_timestamp) {
+	//XXX I took out the timestamp here so that it can use the method getOrder_Tiemstamp()
+	public orders(int order_id, String item_code, int quantity) {
 		this.order_id = order_id;
 		this.item_code = item_code;
 		this.quantity = quantity;
-		this.order_timestamp = order_timestamp;
+		this.order_timestamp = getOrder_Timestamp();
 	}
 	
 	public int getOrder_Id() {
@@ -39,7 +40,10 @@ public class orders {
 	
 	//TODO might want to make this so that it returns the current system date
 	public Date getOrder_Timestamp() {
-		return order_timestamp;
+		long millis=System.currentTimeMillis();  
+		java.sql.Date date=new java.sql.Date(millis);  
+		
+		return date;
 	}
 	
 	public void setOrder_Timestamp(Date order_timestamp) {
