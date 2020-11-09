@@ -1,0 +1,8 @@
+BSU-HY-CS-310_Setup
+
+To Compile:
+	cd down into the src file.
+	compile and run the project.java using these commands:
+		javac project.java java
+		project.java 
+	
