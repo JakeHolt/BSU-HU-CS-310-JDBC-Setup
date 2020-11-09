@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.sql.Date; 
+import java.util.ArrayList; 
 
 public class Project {
 	//XXX add a create item method, it will be like the createCar method
@@ -58,6 +57,7 @@ public class Project {
 	
 	//XXX update the order 
 	public static void updateOrder(String item_code, int quantity, int order_id) throws SQLException {
+		try{
 		Connection connection = null;
 		
 		connection = MySqlDatabase.getDatabaseConnection();
@@ -68,10 +68,15 @@ public class Project {
 		sqlStatement.executeUpdate(sql);
 		
 		connection.close();
+		} catch (SQLException e) {
+			System.out.println("Failed to update order");
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	//XXX delete an order
 	public static void deleteOrder(int order_id) throws SQLException { 
+		try {
 		Connection connection = null;
 		
 		connection = MySqlDatabase.getDatabaseConnection();
@@ -81,6 +86,10 @@ public class Project {
 		sqlStatement.executeUpdate(sql);
 		
 		connection.close();
+		} catch (SQLException e) {
+			System.out.println("Failed to delete an order");
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	//XXX get a list of all the items
@@ -139,33 +148,103 @@ public class Project {
 		return OrderArray;
 	}
 	
+	public static void showAllItems() {
+		try {
+			List<item> items = getAllItems();
+			for(item item: items) {
+				System.out.println(item.toString());
+			}
+		} catch (SQLException e) {
+			System.out.println("Failed to list all items");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void showAllOrders() {
+		try {
+			List<orders> orderList = getAllOrders();
+			for(orders order: orderList) {
+				System.out.println(order.toString());
+			}
+		} catch(SQLException e) {
+			System.out.println("Failed to list all orders");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void createNewItem (int item_id, String item_code, String description, double price, int inventory_amount) {
+		try {
+			item NewItem = createItem(item_id, item_code, description, price, inventory_amount);
+			System.out.println(NewItem.toString());
+		} catch (SQLException e){
+			System.out.println("Failed to create a new item");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void createNewOrder (int order_id, String item_code, int quantity) {
+		try {
+			createOrder(order_id, item_code, quantity); 
+		} catch(SQLException e) {
+			System.out.println("Failed to create a new Order");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
 	
 	//TODO main method, this will be the interface 
 	public static void main(String[] args) {
 		
 		
-		if (args[0].equals("ListItems")) {
+	if (args[0].equals("ListItems")) {
 
-			getAllItems();
+			showAllItems();
+		
+	} else if (args[0].equals("ListOrders")) {
 			
-		} else if(args[0].equals("CreateItem")) {
+			showAllOrders();
+		
+	} else if(args[0].equals("CreateItem")) {
 			
 			int item_id = Integer.parseInt(args[1]);
 			String item_code = args[2]; 
 			String description = args[3];
 			double price = Double.parseDouble(args[4]); 
 			int inventory_amount = Integer.parseInt(args[5]);
-			createItem(item_id, item_code, description, price, inventory_amount);
+			createNewItem(item_id, item_code, description, price, inventory_amount);
 			
-		} else if (args[0].equals("CreateOrder")) {
+	} else if (args[0].equals("CreateOrder")) {
 			
 			int order_id = Integer.parseInt(args[1]);
 			String item_code = args[2];
 			int quantity = Integer.parseInt(args[3]);
-			createOrder(order_id, item_code, quantity);
+			createNewOrder(order_id, item_code, quantity);	
 			
-		}
+	} else if (args[0].equals("UpdateOrder")) {
+			
+			String item_code = args[1];
+			int quantity = Integer.parseInt(args[2]);
+			int order_id = Integer.parseInt(args[3]);
+			try {
+				updateOrder(item_code, quantity, order_id);
+			} catch (SQLException e) {
+				System.out.println("Failed to update an order");
+				e.printStackTrace();
+			}
+		
+	} else if (args[0].contentEquals("DeleteOrder")) {
+			
+			int order_id = Integer.parseInt(args[1]);
+			try {
+				deleteOrder(order_id);
+			} catch (SQLException e) {
+				System.out.println("Failed to delete an order");
+				e.printStackTrace();
+			}
 	}
+	
+}
 }
 
 
