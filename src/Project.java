@@ -5,6 +5,15 @@ import java.util.ArrayList;
 public class Project {
 	//XXX add a create item method, it will be like the createCar method
 	//might have to take out item_id because it is autocompleted within the system
+	/**
+	 * @param item_id
+	 * @param item_code
+	 * @param description
+	 * @param price
+	 * @param inventory_amount
+	 * @return creates an item and returns the newly created item.
+	 * @throws SQLException
+	 */
 	public static item createItem(int item_id, String item_code, String description, double price, int inventory_amount) throws SQLException{
 		Connection connection = null;
 		item item = new item(item_id, item_code, description, price, inventory_amount);
@@ -27,6 +36,15 @@ public class Project {
 	
 	//XXX create an order, would be like the createOwner method
 	//might need to change the order_timestamp, maybe take it out of the parameters and maybe also order ID since they are both auto completed 
+	/**
+	 * @param order_id
+	 * @param item_code
+	 * @param quantity
+	 * @return creates an order and returns the created order
+	 * @throws SQLException
+	 * 
+	 *
+	 */
 	public static orders createOrder(int order_id, String item_code, int quantity) throws SQLException {
 		Connection connection = null;
 		orders order = new orders(order_id, item_code, quantity);
@@ -56,6 +74,14 @@ public class Project {
 
 	
 	//XXX update the order 
+	/**
+	 * @param item_code
+	 * @param quantity
+	 * @param order_id
+	 * @throws SQLException
+	 * 
+	 * updates an order within the orders table
+	 */
 	public static void updateOrder(String item_code, int quantity, int order_id) throws SQLException {
 		try{
 		Connection connection = null;
@@ -75,6 +101,12 @@ public class Project {
 		
 	}
 	//XXX delete an order
+	/**
+	 * @param order_id
+	 * @throws SQLException
+	 * 
+	 * deletes an order from the orders table
+	 */
 	public static void deleteOrder(int order_id) throws SQLException { 
 		try {
 		Connection connection = null;
@@ -93,6 +125,10 @@ public class Project {
 	}
 	
 	//XXX get a list of all the items
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
 	public static List<item> getAllItems() throws SQLException {
 		Connection connection = null;
 		
@@ -121,6 +157,11 @@ public class Project {
 	}
 	
 	//XXX get a list of all orders
+	/**
+	 * @return
+	 * @throws SQLException
+	 * 
+	 */
 	public static List<orders> getAllOrders() throws SQLException {
 		Connection connection = null;
 		
@@ -148,6 +189,10 @@ public class Project {
 		return OrderArray;
 	}
 	
+	/**
+	 * no parameters, 
+	 * @return all the items in the list table
+	 */
 	public static void showAllItems() {
 		try {
 			List<item> items = getAllItems();
@@ -160,6 +205,10 @@ public class Project {
 		}
 	}
 	
+	/**
+	 * no parameters,
+	 * @return all the orders in the order table 
+	 */
 	public static void showAllOrders() {
 		try {
 			List<orders> orderList = getAllOrders();
@@ -172,6 +221,15 @@ public class Project {
 		}
 	}
 	
+	/**
+	 * @param item_id
+	 * @param item_code
+	 * @param description
+	 * @param price
+	 * @param inventory_amount
+	 * 
+	 * creates a new item 
+	 */
 	public static void createNewItem (int item_id, String item_code, String description, double price, int inventory_amount) {
 		try {
 			item NewItem = createItem(item_id, item_code, description, price, inventory_amount);
@@ -182,6 +240,13 @@ public class Project {
 		}
 	}
 	
+	/**
+	 * @param order_id
+	 * @param item_code
+	 * @param quantity
+	 * 
+	 * creates a new order
+	 */
 	public static void createNewOrder (int order_id, String item_code, int quantity) {
 		try {
 			createOrder(order_id, item_code, quantity); 
@@ -194,6 +259,10 @@ public class Project {
 	//Continue on with the methods above, look at the methods from the grade book, make sure they are all there.
 	
 	
+	/**
+	 * @param args
+	 * main method of the program
+	 */
 	public static void main(String[] args) {
 		
 	
