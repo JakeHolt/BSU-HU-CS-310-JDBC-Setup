@@ -10,6 +10,7 @@ public class item {
 	private double price;
 	private int inventory_amount;
 	
+	//do I need create a method for item_id so that it auto-increments?
 	public item(int item_id, String item_code, String description, double price, int inventory_amount) {
 		this.item_id = item_id;
 		this.item_code = item_code;

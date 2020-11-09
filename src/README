@@ -1,8 +1,42 @@
-BSU-HY-CS-310_Setup
+# Project #: BSU-HY-CS-310_Setup
 
-To Compile:
-	cd down into the src file.
-	compile and run the project.java using these commands:
-		javac project.java java
-		project.java 
+* Author: Jake Holt
+* Class: CS-HU310
+* Semester: Fall 2020
+
+## Overview 
+
+This is a command line program that takes in arguments and can handle them
+using a SQL library of java.  All methods throw SQLExceptions.
+It can handle commands like: 
+	createNewItems(int item_id, String item_code, String description, double price, int inventory_amount)
+	createNewOrder(int order_id, String item_code, int quantity)
+	updateOrder(String item_code, int quantity, int order_id)
+	deleteOrder(int order_id) 
+	showAllItems()  
+	showAllOrders()
+
+	 
+## Compiling
+
+Clone it from the git repository using:
+	$ git clone https://github.com/JakeHolt/BSU-HU-CS-310-JDBC-Setup
+
+You may need to run the work file to create the environment.
 	
+To compile:
+	cd into the src file
+	$ javac project.java
+	$ project.java
+
+##Using
+
+This is a command like project.  The first argument (arg[0]) corresponds to 
+a method as stated above, then the following arguments depend on the method chosen.
+
+
+## Sources used
+
+I used Arthur Putnam's example project to help frame the program.  I also used my knowledge of 
+SQL to create statements within the methods.  For some of the syntax for SQL I used 
+https://www.w3schools.com/sql/default.asp  

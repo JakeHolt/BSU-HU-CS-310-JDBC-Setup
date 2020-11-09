@@ -191,12 +191,12 @@ public class Project {
 		}
 	}
 	
+	//Continue on with the methods above, look at the methods from the grade book, make sure they are all there.
 	
 	
-	//TODO main method, this will be the interface 
 	public static void main(String[] args) {
 		
-		
+	
 	if (args[0].equals("ListItems")) {
 
 			showAllItems();
@@ -242,9 +242,11 @@ public class Project {
 				System.out.println("Failed to delete an order");
 				e.printStackTrace();
 			}
-	}
+	} 
 	
 }
 }
+
+
 
 
